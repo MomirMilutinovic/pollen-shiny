@@ -1,0 +1,145 @@
+[
+  {
+    "ID_LOKACIJE": "1",
+    "IME_LOKACIJE": "Beograd - Novi Beograd",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.46806",
+    "GEOGRAFSKA_SIRINA": "44.81861"
+  },
+  {
+    "ID_LOKACIJE": "2",
+    "IME_LOKACIJE": "Beograd (Zvezdara) - Zeleno brdo",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.46667",
+    "GEOGRAFSKA_SIRINA": "44.80000"
+  },
+  {
+    "ID_LOKACIJE": "3",
+    "IME_LOKACIJE": "Čačak",
+    "OPIS_LOKACIJE": "<div>\r\nPodaci o ustanovi u kojoj se obavljaju merenja alergenog polena u okviru Nacionalne mreže:\r\nZavod za javno zdravlje Čačak, Veselina Milikića 7,\r\n<br>\r\ntel/faks: 032 225 019\r\n</div>\r\n<br>\r\n<div>Lica zadužena za poslove praćenja alergenog polena: \r\n<br>Jelena Milović, Dr Svetlana Raketić, Dr Danka Jovanović\r\n</div>\r\n",
+    "GEOGRAFSKA_DUZINA": "20.34972",
+    "GEOGRAFSKA_SIRINA": "43.89139"
+  },
+  {
+    "ID_LOKACIJE": "4",
+    "IME_LOKACIJE": "Kragujevac",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.93333",
+    "GEOGRAFSKA_SIRINA": "44.03333"
+  },
+  {
+    "ID_LOKACIJE": "5",
+    "IME_LOKACIJE": "Kruševac",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "21.33389",
+    "GEOGRAFSKA_SIRINA": "43.58000"
+  },
+  {
+    "ID_LOKACIJE": "6",
+    "IME_LOKACIJE": "Kula",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "19.52639",
+    "GEOGRAFSKA_SIRINA": "45.60889"
+  },
+  {
+    "ID_LOKACIJE": "7",
+    "IME_LOKACIJE": "Požarevac",
+    "OPIS_LOKACIJE": "<div>\r\nPodaci o ustanovi u kojoj se obavljaju merenja alergenog polena u okviru Nacionalne mreže:\r\nZavod za javno zdravlje Požarevac, Jovana Šerbanovića 14, 12000 Požarevac\r\n<br>\r\n<noconv>E-mail: zavodpo0311@open.telekom.rs</noconv>    faks: 012/220-913\r\n<br>\r\ntel: 012/222-568 ,012/223-153 \r\n<br>\r\nLica zadužena za poslove praćenja alergenog polena: <br>Pavlović Zoran, Milošević Marina, Petrović Mirjana, Äurić Svetlana\r\n</div>\r\n",
+    "GEOGRAFSKA_DUZINA": "21.18250",
+    "GEOGRAFSKA_SIRINA": "44.61528"
+  },
+  {
+    "ID_LOKACIJE": "8",
+    "IME_LOKACIJE": "Vranje",
+    "OPIS_LOKACIJE": "<div>\r\nPodaci o ustanovi u kojoj se obavljaju merenja alergenog polena u okviru Nacionalne mreže:\r\nEnološka stanica Vršac doo Vršac\r\n<br>\r\nHeroja Pinkija 49, 26300 Vršac\r\n<br>\r\ntel: 013/821-600 \r\n<br>\r\nfaks: 013/834-769\r\n<br>\r\n<noconv>E-mail: info@enoloskastanic.com, polen@enoloskastanica.com</noconv>\r\n</div>\r\n<br>\r\n<div>Lice zaduženo za poslove praćenja alergenog polena: <br>Aleksandra Stojić\r\n</div>\r\n",
+    "GEOGRAFSKA_DUZINA": "21.90028",
+    "GEOGRAFSKA_SIRINA": "42.55139"
+  },
+  {
+    "ID_LOKACIJE": "9",
+    "IME_LOKACIJE": "Vršac",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "21.30361",
+    "GEOGRAFSKA_SIRINA": "45.11667"
+  },
+  {
+    "ID_LOKACIJE": "10",
+    "IME_LOKACIJE": "Zaječar",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "22.28472",
+    "GEOGRAFSKA_SIRINA": "43.90417"
+  },
+  {
+    "ID_LOKACIJE": "11",
+    "IME_LOKACIJE": "Pančevo",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.64028",
+    "GEOGRAFSKA_SIRINA": "44.87083"
+  },
+  {
+    "ID_LOKACIJE": "12",
+    "IME_LOKACIJE": "Kraljevo",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.68944",
+    "GEOGRAFSKA_SIRINA": "43.72583"
+  },
+  {
+    "ID_LOKACIJE": "13",
+    "IME_LOKACIJE": "Subotica",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "19.66667",
+    "GEOGRAFSKA_SIRINA": "46.10000"
+  },
+  {
+    "ID_LOKACIJE": "14",
+    "IME_LOKACIJE": "Loznica",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "19.22607",
+    "GEOGRAFSKA_SIRINA": "44.53494"
+  },
+  {
+    "ID_LOKACIJE": "15",
+    "IME_LOKACIJE": "Niš",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "21.90333",
+    "GEOGRAFSKA_SIRINA": "43.32472"
+  },
+  {
+    "ID_LOKACIJE": "16",
+    "IME_LOKACIJE": "Zlatibor",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "19.70097",
+    "GEOGRAFSKA_SIRINA": "43.72172"
+  },
+  {
+    "ID_LOKACIJE": "17",
+    "IME_LOKACIJE": "Bečej",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.05279",
+    "GEOGRAFSKA_SIRINA": "45.62513"
+  },
+  {
+    "ID_LOKACIJE": "19",
+    "IME_LOKACIJE": "Sokobanja",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "21.87012",
+    "GEOGRAFSKA_SIRINA": "43.63931"
+
+  },
+  {
+    "ID_LOKACIJE": "20",
+    "IME_LOKACIJE": "Novi Pazar",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.52162",
+    "GEOGRAFSKA_SIRINA": "43.14789"
+
+  },
+  {
+    "ID_LOKACIJE": "21",
+    "IME_LOKACIJE": "Obrenovac",
+    "OPIS_LOKACIJE": "",
+    "GEOGRAFSKA_DUZINA": "20.20020",
+    "GEOGRAFSKA_SIRINA": "44.65800"
+
+  }
+]
