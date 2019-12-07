@@ -1,0 +1,12 @@
+name: PolenNaDan
+title: PolenNaDan
+username:
+account: floatingduck
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1575186
+bundleId: 2649300
+url: https://floatingduck.shinyapps.io/PolenNaDan/
+when: 1575758107.68726
+asMultiple: FALSE
+asStatic: FALSE
