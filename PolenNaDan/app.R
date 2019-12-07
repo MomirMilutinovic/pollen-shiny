@@ -57,18 +57,18 @@ server <- function(input, output) {
             #Color coding values
             colors <- vector()
             categories <- cut(md$concetration, breaks = 8)
-            
             #Asigning colors
             for(i in 1:length(md$concetration))
                 colors <- c(colors, brewer.pal(n = 8, name = 'Greens')[as.integer(categories[i])])
             
             #Drawing map
+            print(head(md))
             leaflet(data = md) %>%
                 addTiles() %>%
                 fitBounds(min(md$long), min(md$lat), max(md$long), max(md$lat)) %>%
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
-                                 fillColor = ~colors, fillOpacity = 0.7, popup = ~as.character(concetration))
+                                 fillColor = ~colors, fillOpacity = 0.7, popup = ~paste("Concetration:", as.character(concetration)))
         }
     })
         
