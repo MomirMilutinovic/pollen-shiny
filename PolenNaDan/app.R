@@ -14,7 +14,8 @@ library("dplyr")
 library("tidyr")
 library("RColorBrewer")
 
-source("ReadData.R")
+pollen <- read.csv("data/pollen.csv", stringsAsFactors = FALSE)
+pollen$date <- as.Date(pollen$date)
 
 # Define UI for application that draws a map
 ui <- fluidPage(
@@ -39,6 +40,7 @@ ui <- fluidPage(
 # Define server logic required to draw a map
 server <- function(input, output) {
     
+    #Create color pallete
     mx <- max(pollen$concetration)
     mn <- min(pollen$concetration)
     d=(mx-mn)/8
@@ -46,15 +48,18 @@ server <- function(input, output) {
     print(br)
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
     
-    higherBr <- br[2]
-    
-    for(i in 3:length(br)){
-        higherBr[i - 1] <- br[i]
-    }
-    
-    higherBr[length(br)] <- Inf
-    
     output$legend <- renderPlot({
+        
+        # Create vector of breaks shifted by one
+        # that will be used for displaying the
+        # intervals for each color
+        higherBr <- br[2]
+        
+        for(i in 3:length(br)){
+            higherBr[i - 1] <- br[i]
+        }
+        
+        # Create the legend
         plot.new()
         legend("center",title = "Legend",legend = paste(as.character(br), " - ", as.character(higherBr)),col = colorPalette,pch=19, ncol = length(br)/2)
     })
