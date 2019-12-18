@@ -1,19 +1,19 @@
-#Reading the list of stations
+# Reading the list of stations
 stationList <- read_json("http://polen.sepa.gov.rs/api/opendata/locations/")
 locations <- data.frame(matrix(unlist(stationList), nrow=length(stationList), byrow=T))
 names(locations) <- c("ID", "Naziv", "lat", "long", "podaci")
 
-#Reading the list of concetrations
+# Reading the list of concetrations
 pollenList <- read_json("http://polen.sepa.gov.rs/api/opendata/pollens/")
 
-#pollenList[4][[1]] contains the actual data
+# pollenList[4][[1]] contains the actual data
 pollenList <- pollenList[4][[1]]
 
 pollen <- data.frame(id = integer(), long = numeric(), lat = numeric(), date = as.Date(character()),
                      concetration = numeric())
 
-#Parsing json by iterating through the lists returned from read_json
-#and putting entries into a data.frame
+# Parsing json by iterating through the lists returned from read_json
+# and putting entries into a data.frame
 for(i in 1:length(pollenList)){
   id <- pollenList[[i]]$id
   locationID <- pollenList[[i]]$location

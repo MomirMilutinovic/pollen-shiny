@@ -25,18 +25,39 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             dateInput("date",
-                        "Date:"),
+                        "Date:")
         ),
 
         # Show a map
         mainPanel(
-            leafletOutput("map", width = "100%", height = 600)
+            leafletOutput("map", width = "100%", height = 600),
+            plotOutput("legend", width = "100%", height = 200)
         )
     )
 )
 
 # Define server logic required to draw a map
 server <- function(input, output) {
+    
+    mx <- max(pollen$concetration)
+    mn <- min(pollen$concetration)
+    d=(mx-mn)/8
+    br=seq(from=mn,to=mx,by=d)
+    print(br)
+    colorPalette <- brewer.pal(n = length(br), name = 'Greens')
+    
+    higherBr <- br[2]
+    
+    for(i in 3:length(br)){
+        higherBr[i - 1] <- br[i]
+    }
+    
+    higherBr[length(br)] <- Inf
+    
+    output$legend <- renderPlot({
+        plot.new()
+        legend("center",title = "Legend",legend = paste(as.character(br), " - ", as.character(higherBr)),col = colorPalette,pch=19, ncol = length(br)/2)
+    })
     
     mapData <- reactive({
         md <- pollen
@@ -47,22 +68,28 @@ server <- function(input, output) {
     output$map <- renderLeaflet({
         md <- mapData()
         
+        
+        
         if(nrow(md) == 0){
-            #Draw an empty map if there is no data for
-            #the given day
+            # Draw an empty map if there is no data for
+            # the given day
             leaflet() %>%
                 addTiles() %>%
                 fitBounds(18, 41, 23, 46)
         }else{
-            #Color coding values
+            # Color coding values
             colors <- vector()
-            categories <- cut(md$concetration, breaks = 8)
-            #Asigning colors
+            categories <- cut(md$concetration, breaks = br, include.lowest = TRUE)
+            print(categories)
+            # Asigning colors
             for(i in 1:length(md$concetration))
-                colors <- c(colors, brewer.pal(n = 8, name = 'Greens')[as.integer(categories[i])])
+                colors <- c(colors, colorPalette[as.integer(categories[i])])
             
-            #Drawing map
-            print(head(md))
+            # Color code legend
+
+
+            
+            # Drawing map
             leaflet(data = md) %>%
                 addTiles() %>%
                 fitBounds(min(md$long), min(md$lat), max(md$long), max(md$lat)) %>%
