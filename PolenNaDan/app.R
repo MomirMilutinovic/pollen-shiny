@@ -14,8 +14,17 @@ library("dplyr")
 library("tidyr")
 library("RColorBrewer")
 
+source("ReadData.R")
+
+# Read from local file
 pollen <- read.csv("data/pollen.csv", stringsAsFactors = FALSE)
 pollen$date <- as.Date(pollen$date)
+
+# Read one page from API
+#pollen <- parseList(read_json("http://polen.sepa.gov.rs/api/opendata/pollens/")["results"][[1]])
+
+# Read all pages from API
+#pollen <- everythingFromAPI()
 
 # Define UI for application that draws a map
 ui <- fluidPage(
@@ -45,7 +54,6 @@ server <- function(input, output) {
     mn <- min(pollen$concetration)
     d=(mx-mn)/8
     br=seq(from=mn,to=mx,by=d)
-    print(br)
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
     
     output$legend <- renderPlot({
@@ -85,7 +93,6 @@ server <- function(input, output) {
             # Color coding values
             colors <- vector()
             categories <- cut(md$concetration, breaks = br, include.lowest = TRUE)
-            print(categories)
             # Asigning colors
             for(i in 1:length(md$concetration))
                 colors <- c(colors, colorPalette[as.integer(categories[i])])

@@ -1,22 +1,14 @@
-# Downloads every entry from the API,
-# assigns locations to the entries and
-# writes them into a csv file
-
 # Reading the list of stations
 stationList <- read_json("http://polen.sepa.gov.rs/api/opendata/locations/")
 locations <- data.frame(matrix(unlist(stationList), nrow=length(stationList), byrow=T))
 names(locations) <- c("ID", "Naziv", "lat", "long", "podaci")
 
-# Reading the list of concetrations
-pollenList <- read_json("http://polen.sepa.gov.rs/api/opendata/pollens/")
-
-pollenListResults <- pollenList["results"][[1]]
 
 parseList <- function(resultList){
   # Parsing json by iterating through the lists returned from read_json
   # and putting entries into a data.frame
   
-  pollen <- data.frame(id = integer(), long = numeric(), lat = numeric(), date = as.Date(character()),
+  pollendf <- data.frame(id = integer(), long = numeric(), lat = numeric(), date = as.Date(character()),
                        concetration = numeric())
   
   for(i in 1:length(resultList)){
@@ -38,20 +30,27 @@ parseList <- function(resultList){
     }
     
     for(j in 1:length(concetrations)){
-      pollen[nrow(pollen) + 1,] = list(i, long, lat, date, concetrations[[j]])
+      pollendf[nrow(pollendf) + 1,] = list(i, long, lat, date, concetrations[[j]])
     }
   }
-  pollen
+  pollendf
 }
 
-pollen <- parseList(pollenListResults)
-
-# Read all the pages
-while(!is.null(unlist(pollenList["next"]))){
-  pollenList <- read_json(unlist(pollenList["next"]))
+everythingFromAPI <- function(){
+  pollenList <- read_json("http://polen.sepa.gov.rs/api/opendata/pollens/")
+  
   pollenListResults <- pollenList["results"][[1]]
-  pollen <- rbind(pollen, parseList(pollenListResults))
+  
+  pollendf <- parseList(pollenListResults)
+  
+  # Read all the pages
+  while(!is.null(unlist(pollenList["next"]))){
+    pollenList <- read_json(unlist(pollenList["next"]))
+    pollenListResults <- pollenList["results"][[1]]
+    pollendf <- rbind(pollendf, parseList(pollenListResults))
+  }
+  pollendf
 }
 
-write.csv(pollen, "data/pollen.csv")
+
 
