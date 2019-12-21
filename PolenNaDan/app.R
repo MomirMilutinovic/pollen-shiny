@@ -14,17 +14,11 @@ library("dplyr")
 library("tidyr")
 library("RColorBrewer")
 
-source("ReadData.R")
-
-# Read from local file
-pollen <- read.csv("data/pollen.csv", stringsAsFactors = FALSE)
+#Read and clean the data
+pollen <- read.csv("data/pollens.csv")
 pollen$date <- as.Date(pollen$date)
-
-# Read one page from API
-#pollen <- parseList(read_json("http://polen.sepa.gov.rs/api/opendata/pollens/")["results"][[1]])
-
-# Read all pages from API
-#pollen <- everythingFromAPI()
+print(class(pollen$lat))
+pollen <- filter(pollen, lat != 0 & long != 0)
 
 # Define UI for application that draws a map
 ui <- fluidPage(
@@ -50,8 +44,8 @@ ui <- fluidPage(
 server <- function(input, output) {
     
     #Create color pallete
-    mx <- max(pollen$concetration)
-    mn <- min(pollen$concetration)
+    mx <- max(pollen$concentration)
+    mn <- min(pollen$concentration)
     d=(mx-mn)/8
     br=seq(from=mn,to=mx,by=d)
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
@@ -81,8 +75,6 @@ server <- function(input, output) {
     output$map <- renderLeaflet({
         md <- mapData()
         
-        
-        
         if(nrow(md) == 0){
             # Draw an empty map if there is no data for
             # the given day
@@ -92,22 +84,20 @@ server <- function(input, output) {
         }else{
             # Color coding values
             colors <- vector()
-            categories <- cut(md$concetration, breaks = br, include.lowest = TRUE)
+            categories <- cut(md$concentration, breaks = br, include.lowest = TRUE)
             # Asigning colors
-            for(i in 1:length(md$concetration))
+            for(i in 1:length(md$concentration))
                 colors <- c(colors, colorPalette[as.integer(categories[i])])
             
-            # Color code legend
-
-
             
+            #print(class(long))
             # Drawing map
             leaflet(data = md) %>%
                 addTiles() %>%
                 fitBounds(min(md$long), min(md$lat), max(md$long), max(md$lat)) %>%
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
-                                 fillColor = ~colors, fillOpacity = 0.7, popup = ~paste("Concetration:", as.character(concetration)))
+                                 fillColor = ~colors, fillOpacity = 0.7, popup = ~paste("concentration:", as.character(concentration)))
         }
     })
         
