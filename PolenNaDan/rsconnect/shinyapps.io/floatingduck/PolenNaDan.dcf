@@ -5,8 +5,9 @@ account: floatingduck
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1575186
-bundleId: 2679403
+bundleId: 2684650
 url: https://floatingduck.shinyapps.io/PolenNaDan/
-when: 1576705211.93114
+when: 1576888992.00377
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: ReadData.R|getData.R

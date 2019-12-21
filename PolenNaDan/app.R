@@ -14,6 +14,7 @@ library("dplyr")
 library("tidyr")
 library("RColorBrewer")
 
+
 #Read and clean the data
 pollen <- read.csv("data/pollens.csv")
 pollen$date <- as.Date(pollen$date)
@@ -89,15 +90,16 @@ server <- function(input, output) {
             for(i in 1:length(md$concentration))
                 colors <- c(colors, colorPalette[as.integer(categories[i])])
             
-            
-            #print(class(long))
             # Drawing map
             leaflet(data = md) %>%
                 addTiles() %>%
                 fitBounds(min(md$long), min(md$lat), max(md$long), max(md$lat)) %>%
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
-                                 fillColor = ~colors, fillOpacity = 0.7, popup = ~paste("concentration:", as.character(concentration)))
+                                 fillColor = ~colors, fillOpacity = 0.7, 
+                                 popup = ~paste("Location: ", location_name, "<br>", "Allergen: ", 
+                                                as.character(allergen_name), "<br>", 
+                                                "Concentration: ", concentration))
         }
     })
         
