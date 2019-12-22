@@ -11,7 +11,6 @@ library("shiny")
 library("jsonlite")
 library("leaflet")
 library("dplyr")
-library("tidyr")
 library("RColorBrewer")
 
 

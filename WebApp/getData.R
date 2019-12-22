@@ -35,6 +35,9 @@ getData <- function() {
   pollendf$lat <- as.numeric(as.character(pollendf$lat))
   pollendf$long <- as.numeric(as.numeric(pollendf$long))
   
+  #Delete unnecessary columns
+  pollendf <- subset(pollendf, select = -c(concentration_id, location, desc, allergen, value, concentration, margine_top, margine_bottom, type))
+  
   pollendf
 }
 
