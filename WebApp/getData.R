@@ -43,4 +43,4 @@ getData <- function() {
 
 # Download and write the data into a file
 pollenDF <- getData()
-write.csv(pollenDF, "data/pollens.csv")
+write.csv(pollenDF, "WebApp/data/pollens.csv")
