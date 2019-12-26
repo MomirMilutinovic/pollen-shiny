@@ -22,7 +22,7 @@ parseConcentrations <- function(concentrationList) {
   
   data <- lapply(concentrationList$results, unlist)
   
-  concentrations <- data.frame(id = integer(), allergen = numeric(), value = numeric(), concentration = numeric())
+  concentrations <- data.frame(id = integer(), allergen = numeric(), value = numeric(), concentration = numeric() )
   
   for(i in 1:length(data)) {
     concentrations[nrow(concentrations) + 1,] <- data[[i]]
@@ -34,8 +34,8 @@ parseConcentrations <- function(concentrationList) {
 parsePollen <- function(pollenList){
   # Parses the pollen JSONs
   
-  pollendf <- data.frame(id = integer(), location = integer(), date = as.Date(character()), concentration = integer())
-  for(i in 1:length(pollenList$results)){
+  pollendf <- data.frame(id = integer(), location = integer(), date = as.Date(character() ), concentration = integer() )
+  for(i in 1:length(pollenList$results) ){
     element <- pollenList$results[[i]]
 
     id <- element$id
@@ -46,7 +46,7 @@ parsePollen <- function(pollenList){
       next
     }
     
-    for(j in 1:length(element$concentrations)){
+    for(j in 1:length(element$concentrations) ){
       pollendf[nrow(pollendf) + 1,] <- list(id, location, date, element$concentrations[[j]])
     }
   
