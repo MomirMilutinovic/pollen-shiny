@@ -13,28 +13,8 @@ library("leaflet")
 library("dplyr")
 library("RColorBrewer")
 
-source("getData.R")
 
-# The deployed app is not contained in WebApp like the non-deployed
-# version. We need to change the working directory if it is not running on a server 
-# in order to find the data (pollen.csv)
-if(dir.exists("WebApp")){
-    setwd("WebApp")
-}
 
-# Download the data if it is not already downloaded
-if(!file.exists(file.path("data", "pollens.csv") ) ){
-    print("Downloading data...")
-    
-    pollen <- getData()
-    write.csv(pollen, file.path("data", "pollens.csv"))
-    
-}
-
-#Read and clean the data
-pollen <- read.csv(file.path("data", "pollens.csv") )
-pollen$date <- as.Date(pollen$date)
-pollen <- filter(pollen, lat != 0 & long != 0)
 
 # Define UI for application that draws a map
 ui <- fluidPage(
@@ -59,10 +39,9 @@ ui <- fluidPage(
 # Define server logic required to draw a map
 server <- function(input, output) {
     
-    #Create color pallete
-    head(pollen)
-    mx <- max(pollen$concentration)
-    mn <- min(pollen$concentration)
+    # Create color pallete
+    mx <- 10000
+    mn <- 0
     d=(mx-mn)/8
     br=seq(from=mn,to=mx,by=d)
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
@@ -72,26 +51,35 @@ server <- function(input, output) {
         # Create vector of breaks shifted by one
         # that will be used for displaying the
         # intervals for each color
+        
         higherBr <- br[2]
+        
         
         for(i in 3:length(br)){
             higherBr[i - 1] <- br[i]
         }
-        
         # Create the legend
         plot.new()
         legend("center",title = "Legend",legend = paste(as.character(br), " - ", as.character(higherBr)),col = colorPalette,pch=19, ncol = length(br)/2)
     })
     
     mapData <- reactive({
-        md <- pollen
-        indices <- which(md$date == input$date)
-        md <- md[indices,]
+        page <- paste("http://polen.sepa.gov.rs/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = "")
+        pollendf <- parsePage(paste("http://polen.sepa.gov.rs/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = ""), parsePollen)
+        
+        if(nrow(pollendf) > 0)
+        {
+            joinData(pollendf) %>% filter(long != 0, lat != 0)
+        }
+        else
+        {
+            pollendf
+        }
+
     })
 
     output$map <- renderLeaflet({
         md <- mapData()
-        
         if(nrow(md) == 0){
             # Draw an empty map if there is no data for
             # the given day
@@ -101,21 +89,21 @@ server <- function(input, output) {
         }else{
             # Color coding values
             colors <- vector()
-            categories <- cut(md$concentration, breaks = br, include.lowest = TRUE)
+            categories <- cut(md$value, breaks = br, include.lowest = TRUE)
             # Asigning colors
-            for(i in 1:length(md$concentration))
-                colors <- c(colors, colorPalette[as.integer(categories[i])] )
             
+            for(i in 1:length(md$value))
+                colors <- c(colors, colorPalette[as.integer(categories[i])] )
             # Drawing map
             leaflet(data = md) %>%
                 addTiles() %>%
-                fitBounds(min(md$long), min(md$lat), max(md$long), max(md$lat) ) %>%
+                fitBounds(min(md$long) - 0.01, min(md$lat) - 0.01, max(md$long) + 0.01, max(md$lat) + 0.01 ) %>%
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
                                  fillColor = ~colors, fillOpacity = 0.7, 
                                  popup = ~paste("Location: ", location_name, "<br>", "Allergen: ", 
                                                 as.character(allergen_name), "<br>", 
-                                                "Concentration: ", concentration), clusterOptions = markerClusterOptions())
+                                                "Concentration: ", value), clusterOptions = markerClusterOptions())
         }
     })
         
