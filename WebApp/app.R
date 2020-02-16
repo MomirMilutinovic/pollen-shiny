@@ -12,8 +12,12 @@ library("jsonlite")
 library("leaflet")
 library("dplyr")
 library("RColorBrewer")
+library("httr")
 
-
+source("ReadData.R")
+source("joinData.R")
+source("getData.R")
+source("get_JSON.R")
 
 
 # Define UI for application that draws a map
@@ -40,7 +44,7 @@ ui <- fluidPage(
 server <- function(input, output) {
     
     # Create color pallete
-    mx <- 10000
+    mx <- 1000
     mn <- 0
     d=(mx-mn)/8
     br=seq(from=mn,to=mx,by=d)
@@ -64,8 +68,8 @@ server <- function(input, output) {
     })
     
     mapData <- reactive({
-        page <- paste("http://polen.sepa.gov.rs/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = "")
-        pollendf <- parsePage(paste("http://polen.sepa.gov.rs/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = ""), parsePollen)
+        path <- paste("/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = "")
+        pollendf <- parsePage("http://polen.sepa.gov.rs/", path, parsePollen)
         
         if(nrow(pollendf) > 0)
         {
@@ -101,9 +105,9 @@ server <- function(input, output) {
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
                                  fillColor = ~colors, fillOpacity = 0.7, 
-                                 popup = ~paste("Location: ", location_name, "<br>", "Allergen: ", 
-                                                as.character(allergen_name), "<br>", 
-                                                "Concentration: ", value), clusterOptions = markerClusterOptions())
+                                 popup = ~paste("<table class=\"table\">", "<tr><td>Location: </td><td>", location_name, "</td></tr>", "<tr><td>Allergen: </td><td>", 
+                                                as.character(allergen_name), "</td></tr>", 
+                                                "<tr><td>Concentration: </td><td>", value, "</td></tr></table>"), clusterOptions = markerClusterOptions())
         }
     })
         

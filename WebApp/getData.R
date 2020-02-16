@@ -1,12 +1,12 @@
 source("ReadData.R")
-parsePage <- function(page, parse)
+parsePage <- function(url, paths, parse)
 {
   # Downloads and parses one or multiple pages
   # with the passed parse function and returns them
   # as a data.frame
+  # paths can be a vector
   
-  
-  data <- lapply(page, read_json)
+  data <- lapply(paths, get_JSON, url = url)
   result <- lapply(data, parse)
   
   df <- do.call("rbind", result)

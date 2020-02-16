@@ -1,4 +1,4 @@
-getAndParse <- function(url, nameVector) {
+getAndParse <- function(url, path, nameVector) {
   # Downloads and parses a single list
   # with elements of the same type
   
@@ -8,7 +8,7 @@ getAndParse <- function(url, nameVector) {
   # Used for downloading locations and
   # allergens
   
-  data <- read_json(url)
+  data <- get_JSON(url, path)
   data <- data.frame(matrix(unlist(data), nrow=length(data), byrow=T), stringsAsFactors = FALSE)
   names(data) <- nameVector
   
@@ -29,7 +29,7 @@ parseConcentrations <- function(concentrationList) {
 
 parseConcentration <- function(concentration) {
   # Parses a single concentration object
-  # Example parseConcentration(read_json("http://polen.sepa.gov.rs/api/opendata/concentrations/1/"))
+  # Example parseConcentration(get_JSON("http://polen.sepa.gov.rs/api/opendata/concentrations/1/"))
   
   result <- data.frame(id = concentration$id, allergen = concentration$allergen, value = concentration$value, pollen = concentration$pollen )
   result

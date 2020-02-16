@@ -1,12 +1,12 @@
-source("WebApp/getData.R")
+source("getData.R")
 joinData <- function(pollens){
   # Joins all tables from the API with
   # an api/opendata/pollens table
   # and returns the resulting data.frame
   
-  locations <- getAndParse("http://polen.sepa.gov.rs/api/opendata/locations/", 
+  locations <- getAndParse("http://polen.sepa.gov.rs", "/api/opendata/locations/",
                            c("id", "location_name", "lat", "long", "desc") )
-  allergens <- getAndParse("http://polen.sepa.gov.rs/api/opendata/allergens/", 
+  allergens <- getAndParse("http://polen.sepa.gov.rs", "/api/opendata/allergens/",
                            c("id", "allergen_name", "localized_name", "margine_top", "margine_bottom", "type", 
                              "allergenitcity", "allergenitcity_display") )
   
@@ -15,9 +15,9 @@ joinData <- function(pollens){
     return(pollens)
   }
   
-  pagesToParse <- paste("http://polen.sepa.gov.rs/api/opendata/concentrations/?pollen=", unique(pollens$id) ,sep = "")
+  pagesToParse <- paste("/api/opendata/concentrations/?pollen=", unique(pollens$id) ,sep = "")
   
-  concentrations <- parsePage(pagesToParse, parseConcentrations)
+  concentrations <- parsePage("http://polen.sepa.gov.rs", pagesToParse, parseConcentrations)
   
   pollen_location <- merge(pollens, locations, by.x = "location", by.y="id")
   concentration_allergen <- merge(concentrations, allergens, by.x = "allergen", by.y="id")
