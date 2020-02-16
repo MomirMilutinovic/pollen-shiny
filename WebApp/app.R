@@ -14,10 +14,13 @@ library("dplyr")
 library("RColorBrewer")
 library("httr")
 
+#setwd("WebApp")
+
 source("ReadData.R")
 source("joinData.R")
 source("getData.R")
 source("get_JSON.R")
+source("getHTMLTable.R")
 
 
 # Define UI for application that draws a map
@@ -51,7 +54,6 @@ server <- function(input, output) {
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
     
     output$legend <- renderPlot({
-        
         # Create vector of breaks shifted by one
         # that will be used for displaying the
         # intervals for each color
@@ -71,6 +73,7 @@ server <- function(input, output) {
         path <- paste("/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = "")
         pollendf <- parsePage("http://polen.sepa.gov.rs/", path, parsePollen)
         
+        
         if(nrow(pollendf) > 0)
         {
             joinData(pollendf) %>% filter(long != 0, lat != 0)
@@ -79,6 +82,8 @@ server <- function(input, output) {
         {
             pollendf
         }
+        
+        
 
     })
 
@@ -105,9 +110,7 @@ server <- function(input, output) {
                 addCircleMarkers(lng = ~long, lat = ~lat,
                                  radius = 10, weight = 5, color = "black",
                                  fillColor = ~colors, fillOpacity = 0.7, 
-                                 popup = ~paste("<table class=\"table\">", "<tr><td>Location: </td><td>", location_name, "</td></tr>", "<tr><td>Allergen: </td><td>", 
-                                                as.character(allergen_name), "</td></tr>", 
-                                                "<tr><td>Concentration: </td><td>", value, "</td></tr></table>"), clusterOptions = markerClusterOptions())
+                                 popup = ~getHTMLTables(md))
         }
     })
         
