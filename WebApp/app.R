@@ -38,7 +38,6 @@ ui <- fluidPage(
         # Show a map
         mainPanel(
             leafletOutput("map", width = "100%", height = 600),
-            plotOutput("legend", width = "100%", height = 200)
         )
     )
 )
@@ -53,22 +52,6 @@ server <- function(input, output) {
     br=seq(from=mn,to=mx,by=d)
     colorPalette <- brewer.pal(n = length(br), name = 'Greens')
     
-    output$legend <- renderPlot({
-        # Create vector of breaks shifted by one
-        # that will be used for displaying the
-        # intervals for each color
-        
-        higherBr <- br[2]
-        
-        
-        for(i in 3:length(br)){
-            higherBr[i - 1] <- br[i]
-        }
-        # Create the legend
-        plot.new()
-        legend("center",title = "Legend",legend = paste(as.character(br), " - ", as.character(higherBr)),col = colorPalette,pch=19, ncol = length(br)/2)
-    })
-    
     mapData <- reactive({
         path <- paste("/api/opendata/pollens/?date_after=", input$date, "&date_before=", input$date, sep = "")
         pollendf <- parsePage("http://polen.sepa.gov.rs/", path, parsePollen)
@@ -82,9 +65,6 @@ server <- function(input, output) {
         {
             pollendf
         }
-        
-        
-
     })
 
     output$map <- renderLeaflet({
