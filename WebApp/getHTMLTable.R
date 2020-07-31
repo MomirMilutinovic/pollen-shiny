@@ -7,7 +7,7 @@ getHTMLTable <- function(pollendf, longitude, lattitude)
    result <- paste(result, "<table class = \"table\">", "<tr><td>", "Location: ", "</td>",
                    "<td>", location_set$location_name[1], "</td></tr>", "</table>", collapse = "", sep = "")
    
-   result <- paste(result, "<table class = \"table\"><tr><th> Allergen </th> <th> Concentration </th></tr>", sep = "")
+   result <- paste(result, "<table class = \"table\"><tr><th> Allergen </th> <th> Concentration [grains/m^3] </th></tr>", sep = "")
    
      
    result <- paste(result, (paste("<tr><td>", 
