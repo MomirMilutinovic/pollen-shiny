@@ -32,7 +32,8 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             dateInput("date",
-                        "Date:")
+                        "Date:"),
+            "Click on a circle to see the pollen concentrations for that location. If no circles appear there is no data for that day. In that case, choose a different date."
         ),
 
         # Show a map
